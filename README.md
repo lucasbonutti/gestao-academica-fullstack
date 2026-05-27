@@ -16,6 +16,7 @@ API RESTful para gerenciamento completo de monitoria acadêmica, desenvolvida co
 - [Sobre o Projeto](#sobre-o-projeto)
 - [Tecnologias](#tecnologias)
 - [Pré-requisitos](#pré-requisitos)
+- [Como Rodar o Projeto](#como-rodar-o-projeto)
 - [Configuração](#configuração)
 - [Execução com Docker](#execução-com-docker)
 - [Execução Local](#execução-local)
@@ -38,6 +39,105 @@ API para gerenciamento de monitoria acadêmica, permitindo o controle de:
 - Matrizes Curriculares e Pré-requisitos
 - Professores e Alunos
 - Monitorias e Relatórios
+
+## 🧱 Estrutura Monorepo
+
+Este repositório reúne agora o backend Spring Boot e o frontend Angular:
+
+| Pasta | Descrição |
+|-------|-----------|
+| `src/` | Código-fonte do backend Spring Boot |
+| `frontend/` | Aplicação Angular |
+| `docs/` | Documentação e diagramas |
+
+O backend roda em `http://localhost:8080` e o frontend em `http://localhost:4200`.
+
+---
+
+## ▶️ Como Rodar o Projeto
+
+Siga este passo a passo para executar o projeto completo em uma máquina local.
+
+### 1. Pré-requisitos
+
+Instale:
+
+- Java 21 ou superior
+- Node.js 20 ou superior
+- npm
+- Git
+
+Você não precisa instalar Maven manualmente, pois o projeto usa Maven Wrapper.
+
+### 2. Clonar o repositório
+
+```bash
+git clone <url-do-repositorio>
+cd gestao-academica-fullstack
+```
+
+### 3. Rodar o backend
+
+Para desenvolvimento local rápido, use o perfil `local`. Esse perfil usa banco H2 em memória, então não exige PostgreSQL nem Docker.
+
+```bash
+sh mvnw spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+Se preferir usar o wrapper diretamente e receber erro de permissão, execute:
+
+```bash
+chmod +x mvnw
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+Quando o backend iniciar, acesse:
+
+| Recurso | URL |
+|---------|-----|
+| API | `http://localhost:8080` |
+| Swagger | `http://localhost:8080/swagger-ui.html` |
+| H2 Console | `http://localhost:8080/h2-console` |
+
+Dados do H2 Console no perfil `local`:
+
+| Campo | Valor |
+|-------|-------|
+| JDBC URL | `jdbc:h2:mem:monitoria_db` |
+| User Name | `sa` |
+| Password | deixe em branco |
+
+### 4. Rodar o frontend
+
+Abra outro terminal e execute:
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+Depois acesse:
+
+```text
+http://localhost:4200
+```
+
+### 5. Login padrão
+
+Ao iniciar o backend, dois usuários são criados automaticamente:
+
+| Login | Senha | Perfil |
+|-------|-------|--------|
+| `admin` | `admin123` | ADMIN |
+| `professor` | `prof123` | PROFESSOR |
+
+### 6. Observações importantes
+
+- O perfil `local` usa banco em memória. Ao parar o backend, os dados cadastrados são perdidos.
+- Para manter dados persistentes, use PostgreSQL via Docker ou configure `application.yaml`.
+- O backend precisa estar rodando antes de usar as telas do frontend que consomem a API.
+- Se a porta `8080` ou `4200` estiver ocupada, pare o processo que está usando a porta ou altere a configuração do serviço.
 
 ---
 
@@ -66,8 +166,12 @@ API para gerenciamento de monitoria acadêmica, permitindo o controle de:
 
 ## 📦 Pré-requisitos
 
-- Docker e Docker Compose (recomendado)
-- ou Java 21, Maven 3.8+ e PostgreSQL 15+ (para execução local)
+- Java 21 ou superior
+- Node.js 20 ou superior
+- npm
+- Git
+- Docker e Docker Compose, caso queira rodar com PostgreSQL em container
+- PostgreSQL 15+, caso queira rodar com banco local instalado na máquina
 
 ---
 
