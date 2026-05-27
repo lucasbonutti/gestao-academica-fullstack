@@ -11,7 +11,7 @@ API RESTful para gerenciamento completo de monitoria acadêmica, desenvolvida co
 
 ---
 
-## 📋 Índice
+## Índice
 
 - [Sobre o Projeto](#sobre-o-projeto)
 - [Tecnologias](#tecnologias)
@@ -30,7 +30,7 @@ API RESTful para gerenciamento completo de monitoria acadêmica, desenvolvida co
 
 ---
 
-## 📖 Sobre o Projeto
+## Sobre o Projeto
 
 API para gerenciamento de monitoria acadêmica, permitindo o controle de:
 
@@ -40,7 +40,7 @@ API para gerenciamento de monitoria acadêmica, permitindo o controle de:
 - Professores e Alunos
 - Monitorias e Relatórios
 
-## 🧱 Estrutura Monorepo
+## Estrutura Monorepo
 
 Este repositório reúne agora o backend Spring Boot e o frontend Angular:
 
@@ -54,7 +54,7 @@ O backend roda em `http://localhost:8080` e o frontend em `http://localhost:4200
 
 ---
 
-## ▶️ Como Rodar o Projeto
+## Como Rodar o Projeto
 
 Siga este passo a passo para executar o projeto completo em uma máquina local.
 
@@ -141,13 +141,13 @@ Ao iniciar o backend, dois usuários são criados automaticamente:
 
 ---
 
-## 🧩 Diagrama de Classes
+## Diagrama de Classes
 
 ![Diagrama de Classes](docs/diagrama-classes.jpeg)
 
 ---
 
-## 🛠️ Tecnologias
+## Tecnologias
 
 | Tecnologia | Versão |
 |------------|--------|
@@ -164,7 +164,7 @@ Ao iniciar o backend, dois usuários são criados automaticamente:
 
 ---
 
-## 📦 Pré-requisitos
+## Pré-requisitos
 
 - Java 21 ou superior
 - Node.js 20 ou superior
@@ -175,7 +175,7 @@ Ao iniciar o backend, dois usuários são criados automaticamente:
 
 ---
 
-## ⚙️ Configuração
+## Configuração
 
 ### Banco de Dados
 
@@ -216,7 +216,7 @@ api:
 
 ⚠️ Importante: Altere seu usuario, sua senha e sua chave para valores reais.
 
-## 🐳 Execução com Docker
+## Execução com Docker
 
 Esta é a forma recomendada para executar o projeto.
 
@@ -281,7 +281,7 @@ Os seguintes usuários são criados **automaticamente** na primeira execução:
 | `DB_PASSWORD` | Senha do banco de dados | **obrigatório** |
 | `JWT_SECRET` | Chave secreta para geração do token JWT | `12345678` |
 
-## 🚀 Execução Local
+## Execução Local
 
 ### Clone o repositório
 
@@ -386,7 +386,7 @@ src/main/java/com/controle/monitoria_api/
     └── application.yml
 ```
 
-## 🔐 Autenticação
+## Autenticação
 
 ### Obter um token
 
@@ -415,7 +415,7 @@ curl -X GET http://localhost:8080/cursos \
   -H "Authorization: Bearer SEU_TOKEN"
 ```
 
-## 👥 Perfis de Acesso
+## Perfis de Acesso
 
 ### Perfil ADMIN
 
@@ -450,7 +450,7 @@ O professor tem acesso de **leitura** a todas as entidades e permissões especí
 
 ---
 
-## 🗂️ Principais Endpoints
+## Principais Endpoints
 
 ### Autenticação
 
@@ -626,7 +626,7 @@ O professor tem acesso de **leitura** a todas as entidades e permissões especí
 
 ---
 
-## 📋 Regras de Negócio
+## Regras de Negócio
 
 ### IES (Instituições de Ensino Superior)
 
@@ -732,7 +732,7 @@ O professor tem acesso de **leitura** a todas as entidades e permissões especí
 
 ---
 
-## 📚 Documentação da API
+## Documentação da API
 
 A documentação interativa está disponível no **Swagger UI**:
 
