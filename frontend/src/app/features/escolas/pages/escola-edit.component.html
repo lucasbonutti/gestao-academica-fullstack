@@ -1,0 +1,75 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <div class="page-top">
+      <div>
+        <h1>Editar Escola</h1>
+        <p>Atualize os dados da escola selecionada.</p>
+      </div>
+
+      <div class="page-actions">
+        <button class="btn-secondary" routerLink="/escolas">Voltar para escolas</button>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="info-box">Carregando...</div>
+
+    <section class="form-card app-card" *ngIf="!loading">
+      <form (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="nome">Nome da escola</label>
+            <input
+              id="nome"
+              name="nome"
+              type="text"
+              [(ngModel)]="nome"
+              maxlength="100"
+              required
+            />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="coordenador">Coordenador responsável</label>
+            <input
+              id="coordenador"
+              name="coordenador"
+              type="text"
+              [(ngModel)]="coordenador"
+              maxlength="100"
+              required
+            />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="iesId">IES vinculada</label>
+            <select
+              id="iesId"
+              name="iesId"
+              [(ngModel)]="iesId"
+              required
+            >
+              <option value="">Selecione uma IES</option>
+              <option *ngFor="let ies of iesList" [value]="ies.id">
+                {{ ies.nome }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">
+          {{ errorMessage }}
+        </div>
+
+        <div *ngIf="successMessage" class="success-box">
+          {{ successMessage }}
+        </div>
+
+        <div class="page-actions form-actions">
+          <button class="btn-success" type="submit" [disabled]="loading">
+            {{ loading ? 'Salvando...' : 'Salvar alterações' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</app-shell>

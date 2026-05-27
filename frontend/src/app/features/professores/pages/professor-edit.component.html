@@ -1,0 +1,97 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <div class="page-top">
+      <div>
+        <h1>Editar Professor</h1>
+        <p>Atualize os dados do professor e complete sua formação acadêmica.</p>
+      </div>
+
+      <div class="page-actions">
+        <button class="btn-secondary" routerLink="/professores">Voltar para professores</button>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="info-box">Carregando...</div>
+
+    <section class="form-card app-card" *ngIf="!loading">
+      <form (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="matricula">Identificação institucional</label>
+            <input
+              id="matricula"
+              name="matricula"
+              type="text"
+              [(ngModel)]="matricula"
+              required
+              maxlength="20"
+            />
+            <small>Este campo é obrigatório no sistema atual.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="nomeCompleto">Nome completo</label>
+            <input
+              id="nomeCompleto"
+              name="nomeCompleto"
+              type="text"
+              [(ngModel)]="nomeCompleto"
+              required
+              maxlength="100"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              [(ngModel)]="email"
+              required
+              maxlength="100"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input
+              id="telefone"
+              name="telefone"
+              type="text"
+              [(ngModel)]="telefone"
+              required
+              maxlength="20"
+            />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="escolaId">Escola</label>
+            <select
+              id="escolaId"
+              name="escolaId"
+              [(ngModel)]="escolaId"
+              required
+            >
+              <option value="">Selecione uma escola</option>
+              <option *ngFor="let escola of escolas" [value]="escola.id">
+                {{ escola.nome }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+        <div class="page-actions" style="margin-top: 18px;">
+          <button class="btn-success" type="submit" [disabled]="loading">
+            {{ loading ? 'Salvando...' : 'Salvar Alterações' }}
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <app-professor-formacoes-panel [professorId]="id"></app-professor-formacoes-panel>
+  </div>
+</app-shell>

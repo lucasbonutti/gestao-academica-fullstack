@@ -1,0 +1,249 @@
+.app-page {
+  padding: 0 0 32px;
+}
+
+/* HERO */
+.relatorios-hero {
+  position: relative;
+  min-height: 360px;
+  border-radius: 28px;
+  overflow: hidden;
+  margin: 20px 20px 36px;
+  display: flex;
+  align-items: stretch;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+}
+
+.relatorios-hero-bg-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.relatorios-hero-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 52%;
+  display: block;
+}
+
+.relatorios-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(15, 23, 42, 0.74) 0%, rgba(15, 23, 42, 0.54) 34%, rgba(15, 23, 42, 0.18) 70%, rgba(15, 23, 42, 0.08) 100%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.16) 100%);
+}
+
+.relatorios-hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 780px;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px 42px 34px;
+  color: white;
+}
+
+.relatorios-hero-content h1 {
+  margin: 14px 0;
+  font-size: 50px;
+  line-height: 1.03;
+  color: white;
+  max-width: 700px;
+}
+
+.relatorios-hero-content p {
+  margin: 0;
+  max-width: 650px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.hero-badge-light {
+  display: inline-flex;
+  width: fit-content;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(8px);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+/* TOPO */
+.page-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 18px;
+  margin: 0 20px 26px;
+  flex-wrap: wrap;
+}
+
+.page-top h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.page-top p {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.65;
+  max-width: 760px;
+}
+
+/* FILTROS */
+.filters-card {
+  margin: 0 20px 22px;
+  padding: 18px 20px;
+  border-radius: 24px;
+}
+
+.filters-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px 4px;
+}
+
+.filters-toggle-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.filters-toggle strong {
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.filters-toggle span {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.arrow {
+  font-size: 22px;
+  transition: transform 0.3s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+.filters-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.filters-content.open {
+  max-height: 1000px;
+  opacity: 1;
+  margin-top: 16px;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.filter-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-block label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.full-btn {
+  width: 100%;
+}
+
+.filters-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* TABELA */
+.table-card {
+  margin: 0 20px;
+  padding: 18px 20px;
+  border-radius: 24px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+}
+
+.actions-cell {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* PAGINAÇÃO */
+.pagination {
+  margin: 20px 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* RESPONSIVO */
+@media (max-width: 1100px) {
+  .relatorios-hero {
+    min-height: 300px;
+    margin: 16px 16px 28px;
+  }
+
+  .relatorios-hero-content {
+    min-height: 300px;
+    max-width: 100%;
+    padding: 30px 24px;
+  }
+
+  .relatorios-hero-content h1 {
+    font-size: 38px;
+  }
+
+  .relatorios-hero-content p {
+    font-size: 15px;
+  }
+
+  .page-top,
+  .filters-card,
+  .table-card,
+  .pagination {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+}

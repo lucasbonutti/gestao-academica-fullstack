@@ -1,0 +1,89 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <div class="page-top">
+      <div>
+        <h1>Editar monitoria</h1>
+        <p>Atualize os dados do vínculo de monitoria selecionado.</p>
+      </div>
+
+      <div class="page-actions">
+        <button class="btn-secondary" routerLink="/monitorias">Voltar para monitorias</button>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="info-box">Carregando...</div>
+
+    <section class="form-card app-card" *ngIf="!loading">
+      <form (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="alunoId">Aluno monitor</label>
+            <select id="alunoId" name="alunoId" [(ngModel)]="alunoId" required>
+              <option value="">Selecione um aluno</option>
+              <option *ngFor="let aluno of alunos" [value]="aluno.id">
+                {{ aluno.nomeCompleto }} - {{ aluno.matricula }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="professorId">Professor orientador</label>
+            <select id="professorId" name="professorId" [(ngModel)]="professorId" required>
+              <option value="">Selecione um professor</option>
+              <option *ngFor="let professor of professores" [value]="professor.id">
+                {{ professor.nomeCompleto }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="disciplinaId">Disciplina</label>
+            <select id="disciplinaId" name="disciplinaId" [(ngModel)]="disciplinaId" required>
+              <option value="">Selecione uma disciplina</option>
+              <option *ngFor="let disciplina of disciplinas" [value]="disciplina.id">
+                {{ disciplina.sigla }} - {{ disciplina.descricao }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="semestre">Semestre</label>
+            <input id="semestre" name="semestre" [(ngModel)]="semestre" required />
+          </div>
+
+          <div class="form-group">
+            <label for="tipoMonitoria">Tipo</label>
+            <select id="tipoMonitoria" name="tipoMonitoria" [(ngModel)]="tipoMonitoria" required>
+              <option value="PRESENCIAL">PRESENCIAL</option>
+              <option value="REMOTO">REMOTO</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="local">Local</label>
+            <input id="local" name="local" [(ngModel)]="local" maxlength="200" required />
+          </div>
+
+          <div class="form-group">
+            <label for="dataInicio">Data de início</label>
+            <input id="dataInicio" name="dataInicio" type="date" [(ngModel)]="dataInicio" required />
+          </div>
+
+          <div class="form-group">
+            <label for="dataFim">Data de fim</label>
+            <input id="dataFim" name="dataFim" type="date" [(ngModel)]="dataFim" required />
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+        <div class="page-actions" style="margin-top: 18px;">
+          <button class="btn-success" type="submit" [disabled]="loading">
+            {{ loading ? 'Salvando...' : 'Salvar alterações' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</app-shell>

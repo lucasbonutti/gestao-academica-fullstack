@@ -1,0 +1,74 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <div class="page-top">
+      <div>
+        <h1>Novo relatório de monitoria</h1>
+        <p>Cadastre o relatório final de uma monitoria encerrada.</p>
+      </div>
+
+      <div class="page-actions">
+        <button class="btn-secondary" routerLink="/relatorios">Voltar para relatórios</button>
+      </div>
+    </div>
+
+    <section class="form-card app-card">
+      <form (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="monitoriaId">Monitoria finalizada</label>
+            <select id="monitoriaId" name="monitoriaId" [(ngModel)]="monitoriaId" required>
+              <option value="">Selecione uma monitoria</option>
+              <option *ngFor="let monitoria of monitorias" [value]="monitoria.id">
+                #{{ monitoria.id }} - {{ monitoria.aluno.nomeCompleto }} - {{ monitoria.disciplina.sigla }} - {{ monitoria.semestre }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="numeroAlunosAtendidos">Número de alunos atendidos</label>
+            <input
+              id="numeroAlunosAtendidos"
+              name="numeroAlunosAtendidos"
+              type="number"
+              min="1"
+              [(ngModel)]="numeroAlunosAtendidos"
+              required
+            />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="ocorrencias">Ocorrências</label>
+            <textarea
+              id="ocorrencias"
+              name="ocorrencias"
+              rows="4"
+              maxlength="500"
+              [(ngModel)]="ocorrencias"
+            ></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="parecerFinal">Parecer final</label>
+            <textarea
+              id="parecerFinal"
+              name="parecerFinal"
+              rows="4"
+              maxlength="500"
+              [(ngModel)]="parecerFinal"
+              required
+            ></textarea>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+        <div class="page-actions" style="margin-top: 18px;">
+          <button class="btn-success" type="submit" [disabled]="loading">
+            {{ loading ? 'Salvando...' : 'Salvar relatório' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</app-shell>

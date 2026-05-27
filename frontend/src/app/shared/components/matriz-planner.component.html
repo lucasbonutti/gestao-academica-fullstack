@@ -1,0 +1,79 @@
+<section class="matriz-visual-card">
+  <div class="matriz-header">
+    <div>
+      <h2>{{ titulo }}</h2>
+      <p>{{ subtitulo }}</p>
+    </div>
+  </div>
+
+  <div class="disciplinas-disponiveis" *ngIf="disciplinasDisponiveisParaExibir.length > 0">
+    <button
+      type="button"
+      class="disciplina-chip"
+      *ngFor="let disciplina of disciplinasDisponiveisParaExibir"
+      [class.selected]="disciplinaSelecionadaId === disciplina.id"
+      (click)="selecionarDisciplina(disciplina.id)"
+    >
+      <strong>{{ disciplina.sigla }}</strong>
+      <span>{{ disciplina.descricao }}</span>
+    </button>
+  </div>
+
+  <div class="matriz-grid">
+    <div class="corner-cell"></div>
+
+    <div class="day-header" *ngFor="let dia of dias">
+      {{ dia }}
+    </div>
+
+    <ng-container *ngFor="let horario of horarios">
+      <div class="time-cell">{{ horario }}</div>
+
+      <div
+        class="planner-cell"
+        *ngFor="let dia of dias"
+      >
+        <ng-container *ngIf="slotPor(dia, horario) as slot">
+          <div
+            class="slot-empty"
+            *ngIf="!slot.disciplina"
+            (click)="adicionarOuTrocar(dia, horario)"
+          >
+            Adicionar
+          </div>
+
+          <div class="slot-filled" *ngIf="slot.disciplina">
+            <div class="slot-filled-content" (click)="adicionarOuTrocar(dia, horario)">
+              <strong>{{ slot.disciplina.sigla }}</strong>
+              <span>{{ slot.disciplina.descricao }}</span>
+            </div>
+
+            <button
+              type="button"
+              class="slot-remove"
+              (click)="remover(dia, horario)"
+            >
+              Remover
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="planner-actions" *ngIf="mostrarAcoes">
+    <button type="button" class="btn-primary" (click)="salvarAlteracoes()">
+      Salvar alterações
+    </button>
+    <button type="button" class="btn-secondary" (click)="desfazerAlteracoes()">
+      Desfazer mudanças
+    </button>
+    <button type="button" class="btn-soft" (click)="limparGrade()">
+      Limpar grade
+    </button>
+  </div>
+
+  <div class="success-box planner-success" *ngIf="successMessage">
+    {{ successMessage }}
+  </div>
+</section>

@@ -1,0 +1,62 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <div class="page-top">
+      <div>
+        <h1>Vincular disciplina à matriz</h1>
+        <p>Selecione a disciplina principal e marque os pré-requisitos, se houver.</p>
+      </div>
+
+      <div class="page-actions">
+        <button class="btn-secondary" [routerLink]="['/matrizes/disciplinas', matrizId]">
+          Voltar para disciplinas da matriz
+        </button>
+      </div>
+    </div>
+
+    <section class="form-card app-card">
+      <form (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="disciplinaId">Disciplina</label>
+            <select id="disciplinaId" name="disciplinaId" [(ngModel)]="disciplinaId" required>
+              <option value="">Selecione uma disciplina</option>
+              <option *ngFor="let disciplina of disciplinas" [value]="disciplina.id">
+                {{ disciplina.sigla }} - {{ disciplina.descricao }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <section class="pre-req-card">
+          <div class="pre-req-top">
+            <h2>Pré-requisitos</h2>
+            <p>Marque as disciplinas que devem ser pré-requisito da disciplina selecionada.</p>
+          </div>
+
+          <div class="pre-req-grid">
+            <label class="pre-req-item" *ngFor="let disciplina of disciplinas">
+              <input
+                type="checkbox"
+                [checked]="preRequisitosIds.includes(disciplina.id)"
+                (change)="alternarPreRequisito(disciplina.id, $any($event.target).checked)"
+              />
+              <div>
+                <strong>{{ disciplina.sigla }}</strong>
+                <small>{{ disciplina.descricao }}</small>
+              </div>
+            </label>
+          </div>
+        </section>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+        <div class="page-actions" style="margin-top: 18px;">
+          <button class="btn-success" type="submit" [disabled]="loading">
+            {{ loading ? 'Salvando...' : 'Vincular disciplina' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</app-shell>

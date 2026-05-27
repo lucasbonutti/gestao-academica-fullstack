@@ -1,0 +1,30 @@
+<div class="shell">
+  <aside class="shell-sidebar">
+    <div class="brand">
+      <div class="brand-icon">M</div>
+      <div class="brand-text">
+        <h2>Monitoria</h2>
+        <p>Gestão Acadêmica Integrada</p>
+      </div>
+    </div>
+
+    <nav class="shell-nav">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/ies" routerLinkActive="active">IES</a>
+      <a routerLink="/escolas" routerLinkActive="active">Escolas</a>
+      <a routerLink="/professores" routerLinkActive="active">Professores</a>
+      <a routerLink="/alunos" routerLinkActive="active">Alunos</a>
+      <a routerLink="/cursos" routerLinkActive="active">Cursos</a>
+      <a routerLink="/matrizes" routerLinkActive="active">Matrizes</a>
+      <a routerLink="/disciplinas" routerLinkActive="active">Disciplinas</a>
+      <a routerLink="/monitorias" routerLinkActive="active">Monitorias</a>
+      <a routerLink="/relatorios" routerLinkActive="active">Relatórios</a>
+    </nav>
+
+    <button class="shell-logout" (click)="logout.emit()">Sair</button>
+  </aside>
+
+  <section class="shell-content">
+    <ng-content></ng-content>
+  </section>
+</div>

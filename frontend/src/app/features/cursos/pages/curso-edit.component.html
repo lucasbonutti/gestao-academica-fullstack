@@ -1,0 +1,62 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <div class="page-top">
+      <div>
+        <h1>Editar curso</h1>
+        <p>Atualize os dados do curso selecionado.</p>
+      </div>
+
+      <div class="page-actions">
+        <button class="btn-secondary" routerLink="/cursos">Voltar para cursos</button>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="info-box">Carregando curso...</div>
+
+    <section class="form-card app-card" *ngIf="!loading">
+      <form (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="sigla">Sigla</label>
+            <input id="sigla" name="sigla" [(ngModel)]="sigla" maxlength="20" required />
+          </div>
+
+          <div class="form-group">
+            <label for="coordenador">Coordenador</label>
+            <input id="coordenador" name="coordenador" [(ngModel)]="coordenador" maxlength="100" required />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="descricao">Descrição</label>
+            <input id="descricao" name="descricao" [(ngModel)]="descricao" maxlength="200" required />
+          </div>
+
+          <div class="form-group">
+            <label for="turno">Turno</label>
+            <select id="turno" name="turno" [(ngModel)]="turno" required>
+              <option *ngFor="let item of turnos" [value]="item">{{ item }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="escolaId">Escola</label>
+            <select id="escolaId" name="escolaId" [(ngModel)]="escolaId" required>
+              <option value="">Selecione uma escola</option>
+              <option *ngFor="let escola of escolas" [value]="escola.id">{{ escola.nome }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+        <div class="page-actions" style="margin-top: 18px;">
+          <button class="btn-success" type="submit" [disabled]="loading">
+            {{ loading ? 'Salvando...' : 'Salvar alterações' }}
+          </button>
+          <button class="btn-secondary" type="button" routerLink="/cursos">Cancelar</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</app-shell>

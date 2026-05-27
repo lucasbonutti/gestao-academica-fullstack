@@ -1,0 +1,47 @@
+<div class="login-page">
+  <div class="login-bg"></div>
+  <div class="login-overlay"></div>
+
+  <div class="login-card">
+    <div class="login-brand">
+      <h1>Sistema de Monitoria Acadêmica</h1>
+      <p>Gestão Acadêmica Integrada</p>
+    </div>
+
+    <form (ngSubmit)="entrar()">
+      <div class="form-group">
+        <label for="login">Login</label>
+        <input
+          id="login"
+          type="text"
+          [(ngModel)]="login"
+          name="login"
+          placeholder="Digite seu login"
+          [disabled]="loading"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input
+          id="senha"
+          type="password"
+          [(ngModel)]="senha"
+          name="senha"
+          placeholder="Digite sua senha"
+          [disabled]="loading"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="loading">
+        {{ loading ? 'Entrando...' : 'Entrar' }}
+      </button>
+
+      <p *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </p>
+    </form>
+  </div>
+</div>

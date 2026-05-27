@@ -1,0 +1,132 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <section class="alunos-hero app-card">
+      <div class="alunos-hero-bg-wrap">
+        <img
+            class="alunos-hero-bg"
+            src="/img/alunos-hero.jpg"
+            alt="Alunos monitores"
+          />
+        <div class="alunos-hero-overlay"></div>
+      </div>
+
+      <div class="alunos-hero-content">
+        <span class="hero-badge-light">Gestão de alunos</span>
+        <h1>Alunos monitores</h1>
+        <p>
+          Cadastre os alunos que poderão atuar como monitores e utilize a matriz
+          ofertada como apoio visual para organização acadêmica.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn-success" routerLink="/alunos/novo">Novo Aluno</button>
+          <button class="btn-soft" routerLink="/alunos/matriz-ofertada">Matriz ofertada</button>
+          <button class="btn-primary" (click)="carregarAlunos()">Atualizar</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-top">
+      <div>
+        <h1>Lista de alunos monitores</h1>
+        <p>
+          Gerencie alunos ativos, inativos e use a matriz ofertada como apoio operacional.
+        </p>
+      </div>
+    </div>
+
+    <section class="filters-card app-card">
+      <div class="filters-top-row">
+        <div class="search-block">
+          <label for="buscaAluno">Buscar por ID</label>
+          <div class="search-inline">
+            <input
+              id="buscaAluno"
+              type="text"
+              placeholder="Buscar por ID"
+              [value]="buscaId"
+              (input)="buscaId = $any($event.target).value"
+            />
+            <button class="btn-primary" (click)="buscarPorId()">Buscar</button>
+            <button class="btn-secondary" (click)="limparBusca()">Limpar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="filters-bottom-row">
+        <div class="filters-right-align">
+          <div class="segmented">
+            <button [class.active]="filtro === 'todos'" (click)="alterarFiltro('todos')">Todos</button>
+            <button [class.active]="filtro === 'ativos'" (click)="alterarFiltro('ativos')">Ativos</button>
+            <button [class.active]="filtro === 'inativos'" (click)="alterarFiltro('inativos')">Inativos</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div *ngIf="loading" class="info-box">Carregando alunos...</div>
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+    <section class="table-card app-card" *ngIf="!loading && alunos.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>MATRÍCULA</th>
+            <th>NOME</th>
+            <th>STATUS</th>
+            <th>DATA CADASTRO</th>
+            <th>AÇÕES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let aluno of alunos">
+            <td>{{ aluno.id }}</td>
+            <td>{{ aluno.matricula }}</td>
+            <td>{{ aluno.nomeCompleto }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [class.status-active]="aluno.ativo"
+                [class.status-inactive]="!aluno.ativo"
+              >
+                {{ aluno.ativo ? 'Ativo' : 'Inativo' }}
+              </span>
+            </td>
+            <td>{{ aluno.dataCadastro | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions-cell">
+              <button class="btn-warning" [routerLink]="['/alunos/editar', aluno.id]">Editar</button>
+
+              <button
+                *ngIf="aluno.ativo"
+                class="btn-danger"
+                (click)="inativar(aluno.id)"
+              >
+                Inativar
+              </button>
+
+              <button
+                *ngIf="!aluno.ativo"
+                class="btn-success"
+                (click)="ativar(aluno.id)"
+              >
+                Ativar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div *ngIf="!loading && alunos.length === 0" class="empty-box">
+      Nenhum aluno encontrado.
+    </div>
+
+    <div class="pagination">
+      <button class="btn-primary" (click)="paginaAnterior()" [disabled]="page === 0">Anterior</button>
+      <span>Página {{ page + 1 }} de {{ totalPages || 1 }}</span>
+      <button class="btn-primary" (click)="proximaPagina()" [disabled]="page + 1 >= totalPages">Próxima</button>
+    </div>
+  </div>
+</app-shell>

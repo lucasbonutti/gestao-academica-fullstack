@@ -1,0 +1,45 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <section class="dashboard-hero app-card">
+      <div class="dashboard-hero-bg-wrap">
+        <img
+          class="dashboard-hero-bg"
+          src="img/dashboard-hero.jpg"
+          alt="Painel acadêmico"
+        />
+        <div class="dashboard-hero-overlay"></div>
+      </div>
+
+      <div class="dashboard-hero-content">
+        <span class="hero-badge-light">Painel principal</span>
+        <h1>Bem-vindo ao sistema de controle de monitoria</h1>
+        <p>
+          Acompanhe alunos, professores, escolas e cursos em uma interface moderna,
+          organizada e pronta para crescer com os próximos módulos.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn-primary" routerLink="/escolas">Explorar escolas</button>
+          <button class="btn-soft" routerLink="/cursos">Abrir cursos</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-metrics">
+      <div class="metric-card app-card">
+        <strong>+ Organização</strong>
+        <span>Fluxo centralizado para acompanhar o sistema com clareza.</span>
+      </div>
+
+      <div class="metric-card app-card">
+        <strong>+ Velocidade</strong>
+        <span>Navegação simples, direta e consistente entre os módulos.</span>
+      </div>
+
+      <div class="metric-card app-card">
+        <strong>+ Escalabilidade</strong>
+        <span>Estrutura pronta para crescer com escolas, cursos e monitorias.</span>
+      </div>
+    </section>
+  </div>
+</app-shell>

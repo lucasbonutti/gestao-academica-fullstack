@@ -1,0 +1,75 @@
+.formacoes-panel {
+  margin-top: 22px;
+  padding: 22px;
+}
+
+.panel-top h2 {
+  margin: 0 0 6px;
+  font-size: 24px;
+}
+
+.panel-top p {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.formacoes-form {
+  margin-top: 18px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.panel-actions {
+  margin-top: 16px;
+}
+
+.formacoes-list {
+  margin-top: 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.formacao-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid #dbe3ef;
+  border-radius: 18px;
+  background: #fbfdff;
+  align-items: center;
+}
+
+.formacao-content h3 {
+  margin: 8px 0 4px;
+}
+
+.formacao-content p {
+  margin: 0 0 6px;
+  color: var(--text-soft);
+}
+
+.formacao-tag {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .formacao-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,49 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <div class="page-top">
+      <div>
+        <h1>Nova matriz curricular</h1>
+        <p>Cadastre uma matriz vinculada a um curso.</p>
+      </div>
+
+      <div class="page-actions">
+        <button class="btn-secondary" routerLink="/matrizes">Voltar para matrizes</button>
+      </div>
+    </div>
+
+    <section class="form-card app-card">
+      <form (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" [(ngModel)]="nome" maxlength="100" required />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="descricao">Descrição</label>
+            <input id="descricao" name="descricao" [(ngModel)]="descricao" maxlength="200" required />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="cursoId">Curso</label>
+            <select id="cursoId" name="cursoId" [(ngModel)]="cursoId" required>
+              <option value="">Selecione um curso</option>
+              <option *ngFor="let curso of cursos" [value]="curso.id">
+                {{ curso.sigla }} - {{ curso.descricao }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+        <div class="page-actions" style="margin-top: 18px;">
+          <button class="btn-success" type="submit" [disabled]="loading">
+            {{ loading ? 'Salvando...' : 'Salvar matriz' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</app-shell>

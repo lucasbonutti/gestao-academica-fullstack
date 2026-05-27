@@ -1,0 +1,83 @@
+<section class="formacoes-panel app-card">
+  <div class="panel-top">
+    <div>
+      <h2>Formações acadêmicas</h2>
+      <p>
+        Complete o perfil do professor com titulação, instituição, curso e ano de conclusão.
+      </p>
+    </div>
+  </div>
+
+  <form class="formacoes-form" (ngSubmit)="salvarFormacao()">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="titulacao">Titulação</label>
+        <select id="titulacao" name="titulacao" [(ngModel)]="titulacao" required>
+          <option *ngFor="let item of titulacoes" [value]="item">
+            {{ formatarTitulo(item) }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="anoConclusao">Ano de conclusão</label>
+        <input
+          id="anoConclusao"
+          name="anoConclusao"
+          type="number"
+          [(ngModel)]="anoConclusao"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="instituicao">Instituição</label>
+        <input
+          id="instituicao"
+          name="instituicao"
+          [(ngModel)]="instituicao"
+          maxlength="150"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="nomeCurso">Curso</label>
+        <input
+          id="nomeCurso"
+          name="nomeCurso"
+          [(ngModel)]="nomeCurso"
+          maxlength="150"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="panel-actions">
+      <button class="btn-success" type="submit">Adicionar formação</button>
+    </div>
+  </form>
+
+  <div *ngIf="loading" class="info-box">Carregando formações...</div>
+  <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+  <div class="formacoes-list" *ngIf="formacoes.length > 0">
+    <div class="formacao-card" *ngFor="let formacao of formacoes">
+      <div class="formacao-content">
+        <span class="formacao-tag">{{ formatarTitulo(formacao.titulacao) }}</span>
+        <h3>{{ formacao.nomeCurso }}</h3>
+        <p>{{ formacao.instituicao }}</p>
+        <small>Conclusão: {{ formacao.anoConclusao }}</small>
+      </div>
+
+      <button class="btn-danger" type="button" (click)="excluirFormacao(formacao.id)">
+        Excluir
+      </button>
+    </div>
+  </div>
+
+  <div class="empty-box" *ngIf="!loading && formacoes.length === 0">
+    Nenhuma formação cadastrada ainda.
+  </div>
+</section>

@@ -1,0 +1,157 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <section class="relatorios-hero app-card">
+      <div class="relatorios-hero-bg-wrap">
+        <img
+          class="relatorios-hero-bg"
+          src="/img/relatorios.jpg"
+          alt="Relatórios de monitoria"
+        />
+        <div class="relatorios-hero-overlay"></div>
+      </div>
+
+      <div class="relatorios-hero-content">
+        <span class="hero-badge-light">Encerramento de monitorias</span>
+        <h1>Relatórios de monitoria</h1>
+        <p>
+          Consulte relatórios por professor, aluno, disciplina, semestre e status
+          de forma centralizada e organizada.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn-success" routerLink="/relatorios/novo">Novo Relatório</button>
+          <button class="btn-primary" (click)="carregarRelatorios()">Atualizar</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-top">
+      <div>
+        <h1>Lista de relatórios</h1>
+        <p>Visualize e filtre os relatórios finais vinculados às monitorias.</p>
+      </div>
+    </div>
+
+    <section class="filters-card app-card">
+      <div class="filters-toggle" (click)="toggleFiltros()">
+        <div class="filters-toggle-block">
+          <strong>Filtros avançados</strong>
+          <span>Refine sua busca</span>
+        </div>
+
+        <span class="arrow" [class.open]="filtrosAbertos">⌄</span>
+      </div>
+
+      <div class="filters-content" [class.open]="filtrosAbertos">
+        <div class="filters-grid">
+          <div class="filter-block">
+            <label for="professorIdBusca">Professor ID</label>
+            <input
+              id="professorIdBusca"
+              type="text"
+              [(ngModel)]="professorIdBusca"
+              placeholder="Digite o ID do professor"
+            />
+            <button class="btn-primary full-btn" type="button" (click)="aplicarFiltro('professor')">
+              Buscar
+            </button>
+          </div>
+
+          <div class="filter-block">
+            <label for="alunoIdBusca">Aluno ID</label>
+            <input
+              id="alunoIdBusca"
+              type="text"
+              [(ngModel)]="alunoIdBusca"
+              placeholder="Digite o ID do aluno"
+            />
+            <button class="btn-primary full-btn" type="button" (click)="aplicarFiltro('aluno')">
+              Buscar
+            </button>
+          </div>
+
+          <div class="filter-block">
+            <label for="disciplinaIdBusca">Disciplina ID</label>
+            <input
+              id="disciplinaIdBusca"
+              type="text"
+              [(ngModel)]="disciplinaIdBusca"
+              placeholder="Digite o ID da disciplina"
+            />
+            <button class="btn-primary full-btn" type="button" (click)="aplicarFiltro('disciplina')">
+              Buscar
+            </button>
+          </div>
+
+          <div class="filter-block">
+            <label for="semestreBusca">Semestre</label>
+            <input
+              id="semestreBusca"
+              type="text"
+              [(ngModel)]="semestreBusca"
+              placeholder="Ex: 2026.1"
+            />
+            <button class="btn-primary full-btn" type="button" (click)="aplicarFiltro('semestre')">
+              Buscar
+            </button>
+          </div>
+
+        </div>
+
+        <div class="filters-actions">
+          <button class="btn-secondary" type="button" (click)="limparFiltros()">
+            Limpar filtros
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div *ngIf="loading" class="info-box">Carregando relatórios...</div>
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+    <section class="table-card app-card" *ngIf="!loading && relatorios.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Monitoria</th>
+            <th>Aluno</th>
+            <th>Disciplina</th>
+            <th>Professor</th>
+            <th>Atendidos</th>
+            <th>Parecer final</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let relatorio of relatorios">
+            <td>{{ relatorio.id }}</td>
+            <td>#{{ relatorio.monitoria.id }} - {{ relatorio.monitoria.semestre }}</td>
+            <td>{{ relatorio.monitoria.aluno.nomeCompleto }}</td>
+            <td>
+              {{ relatorio.monitoria.disciplina.sigla }} -
+              {{ relatorio.monitoria.disciplina.descricao }}
+            </td>
+            <td>{{ relatorio.monitoria.professor.nomeCompleto }}</td>
+            <td>{{ relatorio.numeroAlunosAtendidos }}</td>
+            <td>{{ relatorio.parecerFinal }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div *ngIf="!loading && relatorios.length === 0" class="empty-box">
+      Nenhum relatório encontrado.
+    </div>
+
+    <div class="pagination">
+      <button class="btn-primary" (click)="paginaAnterior()" [disabled]="page === 0">
+        Anterior
+      </button>
+      <span>Página {{ page + 1 }} de {{ totalPages || 1 }}</span>
+      <button class="btn-primary" (click)="proximaPagina()" [disabled]="page + 1 >= totalPages">
+        Próxima
+      </button>
+    </div>
+  </div>
+</app-shell>

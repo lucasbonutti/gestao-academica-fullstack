@@ -1,0 +1,145 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <div class="page-top">
+      <div>
+        <h1>Novo Professor</h1>
+        <p>Cadastre um novo professor no sistema.</p>
+      </div>
+    </div>
+
+    <section class="form-card app-card">
+      <div *ngIf="errorMessage" class="alert error">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="alert success">{{ successMessage }}</div>
+
+      <form (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="matricula">Matrícula</label>
+            <input
+              id="matricula"
+              name="matricula"
+              type="text"
+              [value]="matricula"
+              (input)="onMatriculaInput($event)"
+              placeholder="Ex: 20230001"
+              maxlength="20"
+              required
+            />
+            <small class="form-help">Informe pelo menos 6 números.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="nomeCompleto">Nome completo</label>
+            <input
+              id="nomeCompleto"
+              name="nomeCompleto"
+              type="text"
+              [(ngModel)]="nomeCompleto"
+              placeholder="Digite o nome completo"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              [(ngModel)]="email"
+              placeholder="Digite o email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input
+              id="telefone"
+              name="telefone"
+              type="text"
+              [value]="telefone"
+              (input)="onTelefoneInput($event)"
+              placeholder="(71)91234-5678"
+              maxlength="14"
+              required
+            />
+          </div>
+
+          <div class="form-group full">
+            <label for="escolaId">Escola</label>
+            <select id="escolaId" name="escolaId" [(ngModel)]="escolaId" required>
+              <option value="">Selecione uma escola</option>
+              <option *ngFor="let escola of escolas" [value]="escola.id">
+                {{ escola.nome }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-section-title full">
+            Formação acadêmica
+          </div>
+
+          <div class="form-group">
+            <label for="titulacao">Titulação</label>
+            <select id="titulacao" name="titulacao" [(ngModel)]="titulacao" required>
+              <option value="">Selecione a titulação</option>
+              <option value="GRADUACAO">Graduação</option>
+              <option value="ESPECIALIZACAO">Especialização</option>
+              <option value="MBA">MBA</option>
+              <option value="MESTRADO">Mestrado</option>
+              <option value="DOUTORADO">Doutorado</option>
+              <option value="POS_DOUTORADO">Pós-doutorado</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="instituicao">Instituição</label>
+            <input
+              id="instituicao"
+              name="instituicao"
+              type="text"
+              [(ngModel)]="instituicao"
+              placeholder="Ex: Universidade Federal da Bahia"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="nomeCurso">Curso</label>
+            <input
+              id="nomeCurso"
+              name="nomeCurso"
+              type="text"
+              [(ngModel)]="nomeCurso"
+              placeholder="Ex: Ciência da Computação"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="anoConclusao">Ano de conclusão</label>
+            <input
+              id="anoConclusao"
+              name="anoConclusao"
+              type="number"
+              [(ngModel)]="anoConclusao"
+              placeholder="Ex: 2022"
+              min="1950"
+              max="2100"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" [disabled]="loading">
+            {{ loading ? 'Salvando...' : 'Salvar Professor' }}
+          </button>
+
+          <a routerLink="/professores" class="btn-secondary">Cancelar</a>
+        </div>
+      </form>
+    </section>
+  </div>
+</app-shell>

@@ -1,0 +1,50 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+
+    <div class="page-top">
+      <div>
+        <h1>Planejador de matriz</h1>
+        <p>Selecione uma escola e distribua visualmente as disciplinas disponíveis na semana.</p>
+      </div>
+
+      <div class="page-actions">
+        <button class="btn-secondary" routerLink="/alunos">Voltar para alunos</button>
+      </div>
+    </div>
+
+    <section class="filters-card app-card">
+      <div class="toolbar-row">
+        <div class="filter-group">
+          <label for="escolaId">Escolha a escola</label>
+          <select id="escolaId" [value]="escolaSelecionada" (change)="carregarDisciplinasPorEscola($event)">
+            <option value="">Selecione uma escola</option>
+            <option *ngFor="let escola of escolas" [value]="escola.id">
+              {{ escola.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <div class="info-box" *ngIf="!escolaSelecionada">
+      Selecione uma escola para carregar as disciplinas disponíveis.
+    </div>
+
+    <div *ngIf="loading" class="info-box">Carregando disciplinas...</div>
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+
+    <app-matriz-planner
+      [disciplinasDisponiveis]="disciplinasFiltradas"
+      [mostrarAcoes]="true"
+      titulo="Matriz ofertada"
+      subtitulo="Organize visualmente as disciplinas na grade semanal e salve suas alterações locais."
+    ></app-matriz-planner>
+
+    <section class="helper-box app-card">
+      <h3>Observação</h3>
+      <p>
+        Esta visualização foi pensada para facilitar a organização da matriz ofertada, permitindo uma leitura mais clara da distribuição das disciplinas ao longo da semana.
+      </p>
+    </section>
+  </div>
+</app-shell>

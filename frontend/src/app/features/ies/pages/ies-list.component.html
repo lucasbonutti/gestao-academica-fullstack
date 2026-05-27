@@ -1,0 +1,77 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <section class="ies-hero app-card">
+      <div class="ies-hero-bg-wrap">
+        <img
+          class="ies-hero-bg"
+          src="/img/ies.jpg"
+          alt="Instituições de Ensino Superior"
+        />
+        <div class="ies-hero-overlay"></div>
+      </div>
+
+      <div class="ies-hero-content">
+        <span class="hero-badge-light">Estrutura institucional</span>
+        <h1>Instituições de Ensino Superior</h1>
+        <p>
+          Cadastre e administre as IES que dão base às escolas, cursos e disciplinas
+          do sistema de monitoria.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn-success" routerLink="/ies/nova">Nova IES</button>
+          <button class="btn-primary" (click)="carregarIes()">Atualizar</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-top">
+      <div>
+        <h1>Lista de IES</h1>
+        <p>Gerencie as instituições de ensino superior cadastradas no sistema.</p>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="info-box">Carregando IES...</div>
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+    <section class="table-card app-card" *ngIf="!loading && iesList.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Telefone</th>
+            <th>Cadastro</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ies of iesList">
+            <td>{{ ies.id }}</td>
+            <td>{{ ies.nome }}</td>
+            <td>{{ ies.endereco }}</td>
+            <td>{{ ies.telefone }}</td>
+            <td>{{ ies.dataCadastro | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions-cell">
+              <button class="btn-warning" [routerLink]="['/ies/editar', ies.id]">Editar</button>
+              <button class="btn-danger" (click)="excluir(ies.id)">Excluir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div *ngIf="!loading && iesList.length === 0" class="empty-box">
+      Nenhuma IES encontrada.
+    </div>
+
+    <div class="pagination">
+      <button class="btn-primary" (click)="paginaAnterior()" [disabled]="page === 0">Anterior</button>
+      <span>Página {{ page + 1 }} de {{ totalPages || 1 }}</span>
+      <button class="btn-primary" (click)="proximaPagina()" [disabled]="page + 1 >= totalPages">Próxima</button>
+    </div>
+  </div>
+</app-shell>

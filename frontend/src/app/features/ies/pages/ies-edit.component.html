@@ -1,0 +1,46 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <div class="page-top">
+      <div>
+        <h1>Editar IES</h1>
+        <p>Atualize os dados da instituição de ensino superior.</p>
+      </div>
+
+      <div class="page-actions">
+        <button class="btn-secondary" routerLink="/ies">Voltar para IES</button>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="info-box">Carregando...</div>
+
+    <section class="form-card app-card" *ngIf="!loading">
+      <form (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" [(ngModel)]="nome" maxlength="100" required />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="endereco">Endereço</label>
+            <input id="endereco" name="endereco" [(ngModel)]="endereco" maxlength="200" required />
+          </div>
+
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input id="telefone" name="telefone" [(ngModel)]="telefone" maxlength="20" />
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+        <div class="page-actions" style="margin-top: 18px;">
+          <button class="btn-success" type="submit" [disabled]="loading">
+            {{ loading ? 'Salvando...' : 'Salvar alterações' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</app-shell>

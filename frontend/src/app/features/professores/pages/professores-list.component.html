@@ -1,0 +1,180 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <section class="professores-hero app-card">
+      <div class="professores-hero-bg-wrap">
+        <img
+          class="professores-hero-bg"
+          src="/img/professores.jpg"
+          alt="Gestão de professores"
+        />
+        <div class="professores-hero-overlay"></div>
+      </div>
+
+      <div class="professores-hero-content">
+        <span class="hero-badge-light">Gestão de professores</span>
+
+        <h1>Professores orientadores</h1>
+
+        <p>
+          Gerencie docentes, vínculos com escola e complete suas formações acadêmicas
+          de acordo com o cenário do projeto.
+        </p>
+
+        <!-- BOTÕES AGORA DENTRO DA HERO -->
+        <div class="hero-actions">
+          <button class="btn-success" routerLink="/professores/novo">
+            Novo Professor
+          </button>
+
+          <button class="btn-primary" (click)="carregarProfessores()">
+            Atualizar
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-top">
+      <div>
+        <h1>Lista de professores</h1>
+        <p>
+          Gerencie professores, status, escola e o aprofundamento do perfil acadêmico.
+        </p>
+      </div>
+
+      
+    </div>
+
+    <section class="filters-card app-card">
+      <div class="filters-top-row">
+        <div class="filters-school">
+          <label for="escola">Filtrar por escola</label>
+          <select
+            id="escola"
+            [value]="escolaSelecionada"
+            (change)="aplicarFiltroEscola($event)"
+          >
+            <option value="">Todas as escolas</option>
+            <option *ngFor="let escola of escolas" [value]="escola.id">
+              {{ escola.nome }}
+            </option>
+          </select>
+        </div>
+
+        <div class="segmented">
+          <button [class.active]="filtro === 'todos'" (click)="alterarFiltro('todos')">
+            Todos
+          </button>
+          <button [class.active]="filtro === 'ativos'" (click)="alterarFiltro('ativos')">
+            Ativos
+          </button>
+          <button [class.active]="filtro === 'inativos'" (click)="alterarFiltro('inativos')">
+            Inativos
+          </button>
+        </div>
+      </div>
+
+      <div class="filters-bottom-row">
+        <div class="search-block">
+          <label for="buscaProfessor">Buscar professor por ID</label>
+          <div class="search-inline">
+            <input
+              id="buscaProfessor"
+              type="text"
+              placeholder="Digite o ID do professor"
+              [value]="buscaId"
+              (input)="buscaId = $any($event.target).value"
+            />
+            <button class="btn-primary" (click)="buscarPorId()">Buscar</button>
+            <button class="btn-secondary" (click)="limparBusca()">Limpar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div *ngIf="loading" class="info-box">Carregando professores...</div>
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+    <section class="table-card app-card" *ngIf="!loading && professores.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>MATRÍCULA</th>
+            <th>NOME</th>
+            <th>EMAIL</th>
+            <th>TELEFONE</th>
+            <th>ESCOLA</th>
+            <th>FORMAÇÃO</th>
+            <th>STATUS</th>
+            <th>CADASTRO</th>
+            <th>AÇÕES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let professor of professores">
+            <td>{{ professor.id }}</td>
+            <td>{{ professor.matricula }}</td>
+            <td>{{ professor.nomeCompleto }}</td>
+            <td>{{ professor.email }}</td>
+            <td>{{ professor.telefone }}</td>
+            <td>{{ professor.escola.nome }}</td>
+            <td>{{ formacoesPorProfessor[professor.id] || 'Carregando...' }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [class.status-active]="professor.ativo"
+                [class.status-inactive]="!professor.ativo"
+              >
+                {{ professor.ativo ? 'Ativo' : 'Inativo' }}
+              </span>
+            </td>
+            <td>{{ professor.dataCadastro | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions-cell">
+              <button
+                class="btn-warning"
+                [routerLink]="['/professores/editar', professor.id]"
+              >
+                Editar
+              </button>
+
+              <button
+                *ngIf="professor.ativo"
+                class="btn-danger"
+                (click)="inativar(professor.id)"
+              >
+                Inativar
+              </button>
+
+              <button
+                *ngIf="!professor.ativo"
+                class="btn-success"
+                (click)="ativar(professor.id)"
+              >
+                Ativar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div *ngIf="!loading && professores.length === 0" class="empty-box">
+      Nenhum professor encontrado.
+    </div>
+
+    <div class="pagination">
+      <button class="btn-primary" (click)="paginaAnterior()" [disabled]="page === 0">
+        Anterior
+      </button>
+      <span>Página {{ page + 1 }} de {{ totalPages || 1 }}</span>
+      <button
+        class="btn-primary"
+        (click)="proximaPagina()"
+        [disabled]="page + 1 >= totalPages"
+      >
+        Próxima
+      </button>
+    </div>
+  </div>
+</app-shell>

@@ -1,0 +1,128 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <section class="disciplinas-hero app-card">
+      <div class="disciplinas-hero-bg-wrap">
+        <img
+          class="disciplinas-hero-bg"
+          src="/img/disciplinas.jpg"
+          alt="Disciplinas ofertadas"
+        />
+        <div class="disciplinas-hero-overlay"></div>
+      </div>
+
+      <div class="disciplinas-hero-content">
+        <span class="hero-badge-light">Gestão de disciplinas</span>
+        <h1>Disciplinas ofertadas</h1>
+        <p>
+          Organize as disciplinas por escola, acompanhe o status de oferta
+          e use a matriz ofertada como apoio visual.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn-success" routerLink="/disciplinas/nova">
+            Nova Disciplina
+          </button>
+          <button class="btn-primary" (click)="carregarDisciplinas()">
+            Atualizar
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-top">
+      <div>
+        <h1>Lista de disciplinas</h1>
+        <p>Gerencie disciplinas ativas, inativas e sua distribuição acadêmica.</p>
+      </div>
+    </div>
+
+    <section class="filters-card app-card">
+      <div class="toolbar-row">
+        <div class="segmented">
+          <button [class.active]="filtro === 'todas'" (click)="alterarFiltro('todas')">Todas</button>
+          <button [class.active]="filtro === 'ativas'" (click)="alterarFiltro('ativas')">Ativas</button>
+          <button [class.active]="filtro === 'inativas'" (click)="alterarFiltro('inativas')">Inativas</button>
+        </div>
+
+        <div class="filter-group">
+          <select [value]="escolaSelecionada" (change)="aplicarFiltroEscola($event)">
+            <option value="">Todas as escolas</option>
+            <option *ngFor="let escola of escolas" [value]="escola.id">
+              {{ escola.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <div *ngIf="loading" class="info-box">Carregando disciplinas...</div>
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+    <section class="table-card app-card" *ngIf="!loading && disciplinas.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Sigla</th>
+            <th>Descrição</th>
+            <th>Carga horária</th>
+            <th>Escola</th>
+            <th>Status</th>
+            <th>Cadastro</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let disciplina of disciplinas">
+            <td>{{ disciplina.id }}</td>
+            <td>{{ disciplina.sigla }}</td>
+            <td>{{ disciplina.descricao }}</td>
+            <td>{{ disciplina.cargaHoraria }}h</td>
+            <td>{{ disciplina.escola.nome }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="disciplina.ativo ? 'status-active' : 'status-inactive'">
+                {{ disciplina.ativo ? 'Ativa' : 'Inativa' }}
+              </span>
+            </td>
+            <td>{{ disciplina.dataCadastro | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions-cell">
+              <button class="btn-warning" [routerLink]="['/disciplinas/editar', disciplina.id]">Editar</button>
+              <button *ngIf="disciplina.ativo" class="btn-danger" (click)="inativar(disciplina.id)">Inativar</button>
+              <button *ngIf="!disciplina.ativo" class="btn-success" (click)="ativar(disciplina.id)">Ativar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div *ngIf="!loading && disciplinas.length === 0" class="empty-box">
+      Nenhuma disciplina encontrada.
+    </div>
+
+    <div class="pagination">
+      <button class="btn-primary" (click)="paginaAnterior()" [disabled]="page === 0">Anterior</button>
+      <span>Página {{ page + 1 }} de {{ totalPages || 1 }}</span>
+      <button class="btn-primary" (click)="proximaPagina()" [disabled]="page + 1 >= totalPages">Próxima</button>
+    </div>
+
+    <section class="planner-shell app-card" *ngIf="disciplinasMatriz.length > 0">
+      <div class="planner-toggle" (click)="togglePlanner()">
+        <div class="planner-toggle-text">
+          <strong>Matriz ofertada visual</strong>
+          <span>Expanda ou oculte a visualização para otimizar espaço.</span>
+        </div>
+        <span class="arrow" [class.open]="plannerAberto">⌄</span>
+      </div>
+
+      <div class="planner-content" *ngIf="plannerAberto">
+        <app-matriz-planner
+          [disciplinasDisponiveis]="disciplinasMatriz"
+          [mostrarAcoes]="true"
+          titulo="Matriz ofertada visual"
+          subtitulo="As disciplinas adicionadas permanecem visíveis localmente até que sejam removidas."
+        ></app-matriz-planner>
+      </div>
+    </section>
+  </div>
+</app-shell>

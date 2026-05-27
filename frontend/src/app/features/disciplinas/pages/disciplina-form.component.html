@@ -1,0 +1,54 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <div class="page-top">
+      <div>
+        <h1>Nova disciplina</h1>
+        <p>Cadastre uma nova disciplina vinculada a uma escola.</p>
+      </div>
+
+      <div class="page-actions">
+        <button class="btn-secondary" routerLink="/disciplinas">Voltar para disciplinas</button>
+      </div>
+    </div>
+
+    <section class="form-card app-card">
+      <form (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="sigla">Sigla</label>
+            <input id="sigla" name="sigla" [(ngModel)]="sigla" maxlength="20" required />
+          </div>
+
+          <div class="form-group">
+            <label for="cargaHoraria">Carga horária</label>
+            <input id="cargaHoraria" name="cargaHoraria" type="number" [(ngModel)]="cargaHoraria" min="1" required />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="descricao">Descrição</label>
+            <input id="descricao" name="descricao" [(ngModel)]="descricao" maxlength="200" required />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="escolaId">Escola</label>
+            <select id="escolaId" name="escolaId" [(ngModel)]="escolaId" required>
+              <option value="">Selecione uma escola</option>
+              <option *ngFor="let escola of escolas" [value]="escola.id">
+                {{ escola.nome }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+        <div class="page-actions" style="margin-top: 18px;">
+          <button class="btn-success" type="submit" [disabled]="loading">
+            {{ loading ? 'Salvando...' : 'Salvar disciplina' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</app-shell>

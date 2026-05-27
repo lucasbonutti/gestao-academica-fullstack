@@ -1,0 +1,87 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <section class="matriz-disciplinas-hero app-card">
+      <div class="matriz-disciplinas-hero-bg-wrap">
+        <img
+          class="matriz-disciplinas-hero-bg"
+          src="/img/matriz-ofertada-hero.jpg"
+          alt="Disciplinas da matriz"
+        />
+        <div class="matriz-disciplinas-hero-overlay"></div>
+      </div>
+
+      <div class="matriz-disciplinas-hero-content">
+        <span class="hero-badge-light">Estrutura da matriz</span>
+        <h1>Disciplinas da matriz</h1>
+        <p>
+          Associe disciplinas à matriz curricular e organize os pré-requisitos
+          de forma coerente com a estrutura do curso.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn-success" [routerLink]="['/matrizes/disciplinas', matrizId, 'nova']">
+            Vincular disciplina
+          </button>
+          <button class="btn-secondary" routerLink="/matrizes">Voltar para matrizes</button>
+          <button class="btn-primary" (click)="carregarDisciplinasDaMatriz()">Atualizar</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-top">
+      <div>
+        <h1>{{ matriz?.nome || 'Matriz curricular' }}</h1>
+        <p>
+          Curso:
+          <strong *ngIf="matriz">
+            {{ matriz.curso.sigla }} - {{ matriz.curso.descricao }}
+          </strong>
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="info-box">Carregando disciplinas da matriz...</div>
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+    <section class="table-card app-card" *ngIf="!loading && itens.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>ID vínculo</th>
+            <th>Disciplina</th>
+            <th>Descrição</th>
+            <th>Pré-requisitos</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itens">
+            <td>{{ item.id }}</td>
+            <td>{{ item.disciplina.sigla }}</td>
+            <td>{{ item.disciplina.descricao }}</td>
+            <td>{{ formatarPreRequisitos(item) }}</td>
+            <td class="actions-cell">
+              <button
+                class="btn-warning"
+                [routerLink]="['/matrizes/disciplinas/editar', item.id]"
+              >
+                Editar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div *ngIf="!loading && itens.length === 0" class="empty-box">
+      Nenhuma disciplina vinculada a esta matriz.
+    </div>
+
+    <div class="pagination">
+      <button class="btn-primary" (click)="paginaAnterior()" [disabled]="page === 0">Anterior</button>
+      <span>Página {{ page + 1 }} de {{ totalPages || 1 }}</span>
+      <button class="btn-primary" (click)="proximaPagina()" [disabled]="page + 1 >= totalPages">Próxima</button>
+    </div>
+  </div>
+</app-shell>

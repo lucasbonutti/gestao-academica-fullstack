@@ -1,0 +1,48 @@
+.pre-req-card {
+  margin-top: 22px;
+  padding: 18px;
+  border: 1px solid #dbe3ef;
+  border-radius: 20px;
+  background: #fbfdff;
+}
+
+.pre-req-top h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+}
+
+.pre-req-top p {
+  margin: 0 0 14px;
+  color: var(--text-soft);
+}
+
+.pre-req-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pre-req-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px;
+  border: 1px solid #e5edf7;
+  border-radius: 16px;
+  background: white;
+}
+
+.pre-req-item strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.pre-req-item small {
+  color: var(--text-soft);
+}
+
+@media (max-width: 900px) {
+  .pre-req-grid {
+    grid-template-columns: 1fr;
+  }
+}

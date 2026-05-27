@@ -1,0 +1,104 @@
+<app-shell (logout)="sair()">
+  <div class="app-page">
+    <section class="matrizes-hero app-card">
+      <div class="matrizes-hero-bg-wrap">
+        <img
+          class="matrizes-hero-bg"
+          src="/img/matriz.jpg"
+          alt="Matrizes curriculares"
+        />
+        <div class="matrizes-hero-overlay"></div>
+      </div>
+
+      <div class="matrizes-hero-content">
+        <span class="hero-badge-light">Estrutura curricular</span>
+        <h1>Matrizes curriculares</h1>
+        <p>
+          Organize as matrizes curriculares por curso, ativação e estrutura acadêmica
+          para servir de base às disciplinas e pré-requisitos.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn-success" routerLink="/matrizes/nova">Nova Matriz</button>
+          <button class="btn-primary" (click)="carregarMatrizes()">Atualizar</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-top">
+      <div>
+        <h1>Lista de matrizes</h1>
+        <p>Gerencie matrizes curriculares por curso e status.</p>
+      </div>
+    </div>
+
+    <section class="filters-card app-card">
+      <div class="toolbar-row">
+        <div class="segmented">
+          <button [class.active]="filtro === 'todas'" (click)="alterarFiltro('todas')">Todas</button>
+          <button [class.active]="filtro === 'ativas'" (click)="alterarFiltro('ativas')">Ativas</button>
+          <button [class.active]="filtro === 'inativas'" (click)="alterarFiltro('inativas')">Inativas</button>
+        </div>
+
+        <div class="filter-group">
+          <select [value]="cursoSelecionado" (change)="aplicarFiltroCurso($event)">
+            <option value="">Todos os cursos</option>
+            <option *ngFor="let curso of cursos" [value]="curso.id">
+              {{ curso.sigla }} - {{ curso.descricao }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <div *ngIf="loading" class="info-box">Carregando matrizes...</div>
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
+
+    <section class="table-card app-card" *ngIf="!loading && matrizes.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Curso</th>
+            <th>Status</th>
+            <th>Cadastro</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let matriz of matrizes">
+            <td>{{ matriz.id }}</td>
+            <td>{{ matriz.nome }}</td>
+            <td>{{ matriz.descricao }}</td>
+            <td>{{ matriz.curso.sigla }} - {{ matriz.curso.descricao }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="matriz.ativo ? 'status-active' : 'status-inactive'">
+                {{ matriz.ativo ? 'Ativa' : 'Inativa' }}
+              </span>
+            </td>
+            <td>{{ matriz.dataCadastro | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions-cell">
+              <button class="btn-warning" [routerLink]="['/matrizes/editar', matriz.id]">Editar</button>
+              <button class="btn-soft" [routerLink]="['/matrizes/disciplinas', matriz.id]">Disciplinas</button>
+              <button *ngIf="matriz.ativo" class="btn-danger" (click)="inativar(matriz.id)">Inativar</button>
+              <button *ngIf="!matriz.ativo" class="btn-success" (click)="ativar(matriz.id)">Ativar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div *ngIf="!loading && matrizes.length === 0" class="empty-box">
+      Nenhuma matriz encontrada.
+    </div>
+
+    <div class="pagination">
+      <button class="btn-primary" (click)="paginaAnterior()" [disabled]="page === 0">Anterior</button>
+      <span>Página {{ page + 1 }} de {{ totalPages || 1 }}</span>
+      <button class="btn-primary" (click)="proximaPagina()" [disabled]="page + 1 >= totalPages">Próxima</button>
+    </div>
+  </div>
+</app-shell>
